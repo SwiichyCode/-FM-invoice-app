@@ -1,133 +1,91 @@
 import React from "react";
-import { Formik, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 import styled from "styled-components";
-import InputText from "./InputText";
 import { SignInSchema } from "./validationSchema";
 import initialValue from "./initialValues";
+import MyTextInput from "./MyInputText";
+import MySelect from "./MySelect";
+import { DatePicker, SubmitBtn } from "react-formik-ui";
 
-export default function Form({ isActive, handleToggle, addUser }) {
+export default function FormSchema({ isActive, handleToggle, addUser }) {
   return (
     <FormWrapper className="formWrapper">
       <Formik
-        initialValues={initialValue}
+        initialValues={{
+          initialValue,
+        }}
         validationSchema={SignInSchema}
-        onSubmit={(values) => {
-          addUser(values);
+        onSubmit={(values, { setSubmitting }) => {
+          setTimeout(() => {
+            addUser(values);
+            setSubmitting(false);
+          });
         }}
       >
-        {(props) => (
-          <>
-            <form
-              className={isActive ? null : "active"}
-              onSubmit={props.handleSubmit}
-            >
-              <h1>New invoice</h1>
-
-              <div className="billFrom">
-                <h3 className="secondaryH3">Bill From</h3>
+        <>
+          <Form className={isActive ? null : "active"}>
+            <h1>New invoice</h1>
+            <div className="billFrom">
+              <h3 className="secondaryH3">Bill From</h3>
+              <div className="inputColumn">
+                {/* prettier-ignore */}
+                <MyTextInput label="Street Address" name="senderAddress.street" type="text" />
+                <div className="inputFlex">
+                  {/* prettier-ignore */}
+                  <MyTextInput label="City" name="senderAddress.city" type="text" />
+                  {/* prettier-ignore */}
+                  <MyTextInput label="Post Code" name="senderAddress.postCode" type="text" />
+                  {/* prettier-ignore */}
+                  <MyTextInput label="Country" name="senderAddress.country" type="text" />
+                </div>
+              </div>
+            </div>
+            <div className="billTo">
+              <h3 className="secondaryH3">Bill To</h3>
+              <div className="inputColumn">
                 <div className="inputColumn">
-                  <InputText
-                    onChange={props.handleChange}
-                    value={props.values.senderAddress.street}
-                    name="senderAddress.street"
-                    id="street"
-                    labelFor="street"
-                    labelText="Street Address"
+                  {/* prettier-ignore */}
+                  <MyTextInput label="Client's Name" name="clientName" type="text" />
+                  {/* prettier-ignore */}
+                  <MyTextInput label="Client's Email" name="clientEmail" type="text" />
+                  {/* prettier-ignore */}
+                  <MyTextInput label="Street Address" name="clientAddress.street" type="text" />
+                </div>
+                <div className="inputFlex">
+                  {/* prettier-ignore */}
+                  <MyTextInput label="City" name="clientAddress.city" type="text" />
+                  {/* prettier-ignore */}
+                  <MyTextInput label="Post Code" name="clientAddress.postCode" type="text" />
+                  {/* prettier-ignore */}
+                  <MyTextInput label="Country" name="clientAddress.country" type="text" />
+                  {/* prettier-ignore */}
+                </div>
+                <div className="inputFlex">
+                  <MySelect label="Payment Terms" name="paymentTerms">
+                    <option value="">Net 30 Days</option>
+                    <option value="1">Net 1 Day</option>
+                    <option value="7">Net 7 Day</option>
+                    <option value="14">Net 14 Day</option>
+                    <option value="30">Net 30 Day</option>
+                  </MySelect>
+                  <DatePicker
+                    name="paymentDue"
+                    label="Invoice Date"
+                    disabledKeyboardNavigation={false}
                   />
-                  <div className="inputFlex">
-                    <InputText
-                      onChange={props.handleChange}
-                      value={props.values.senderAddress.city}
-                      name="senderAddress.city"
-                      id="city"
-                      labelFor="city"
-                      labelText="City"
-                    />
-                    <InputText
-                      onChange={props.handleChange}
-                      value={props.values.senderAddress.postCode}
-                      name="senderAddress.postCode"
-                      id="postCode"
-                      labelFor="postCode"
-                      labelText="Post Code"
-                    />
-                    <InputText
-                      onChange={props.handleChange}
-                      value={props.values.senderAddress.country}
-                      name="senderAddress.country"
-                      id="country"
-                      labelFor="country"
-                      labelText="Country"
-                    />
-                  </div>
                 </div>
+                {/* Project-description*/}
+                {/* prettier-ignore */}
+                <MyTextInput label="Project Description" name="description" type="text" />
               </div>
-              <div className="billTo">
-                <h3 className="secondaryH3">Bill To</h3>
-                <div className="inputColumn">
-                  <div className="inputColumn">
-                    <InputText
-                      onChange={props.handleChange}
-                      value={props.values.clientName}
-                      name="clientName"
-                      id="clientName"
-                      labelFor="clientName"
-                      labelText="Client's Name"
-                    />
-                    <ErrorMessage name="clientName" />
-                    <InputText
-                      onChange={props.handleChange}
-                      value={props.values.clientEmail}
-                      name="clientEmail"
-                      id="clientEmail"
-                      labelFor="clientEmail"
-                      labelText="Client's Email"
-                    />
-                    <InputText
-                      onChange={props.handleChange}
-                      value={props.values.clientAddress.street}
-                      name="clientAddress.street"
-                      id="streetAddress"
-                      labelFor="streetAddress"
-                      labelText="Street Address"
-                    />
-                  </div>
-                  <div className="inputFlex">
-                    <InputText
-                      onChange={props.handleChange}
-                      value={props.values.clientAddress.city}
-                      name="clientAddress.city"
-                      id="cityAddress"
-                      labelFor="cityAddress"
-                      labelText="City"
-                    />
-                    <InputText
-                      onChange={props.handleChange}
-                      value={props.values.clientAddress.postCode}
-                      name="clientAddress.postCode"
-                      id="postCodeAddress"
-                      labelFor="postCodeAddress"
-                      labelText="Post Code"
-                    />
-                    <InputText
-                      onChange={props.handleChange}
-                      value={props.values.clientAddress.country}
-                      name="clientAddress.country"
-                      id="countryAddress"
-                      labelFor="countryAddress"
-                      labelText="Country"
-                    />
-                  </div>
-                </div>
-              </div>
-              <button type="submit">Add new user</button>
-            </form>
-            <div
-              className={isActive ? "formWrapper" : "formWrapper active"}
-              onClick={handleToggle}
-            ></div>
-          </>
-        )}
+            </div>
+            <button type="submit">Add new user</button>
+          </Form>
+          <div
+            className={isActive ? "formWrapper" : "formWrapper active"}
+            onClick={handleToggle}
+          ></div>
+        </>
       </Formik>
     </FormWrapper>
   );

@@ -5,7 +5,7 @@ import UsersEmpty from "./UsersEmpty";
 import { breakpoints } from "../../../context/media";
 
 export default function UsersList({ users }) {
-  // initialState.length = 2;
+  //users.length = 0;
 
   return (
     <UsersListWrapper>

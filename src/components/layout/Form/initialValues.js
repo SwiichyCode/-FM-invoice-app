@@ -1,7 +1,5 @@
-import uuid from "../../../tools/randomId";
-
 const initialValues = {
-  id: uuid(),
+  id: "",
   createdAt: Date.now(),
   paymentDue: "",
   paymentTerms: "",

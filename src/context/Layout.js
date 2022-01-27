@@ -7,8 +7,6 @@ import typography from "../css/typography";
 
 // 1.
 export const GlobalStyle = createGlobalStyle`
-  // Reset css
-  
   // Panel colors
   ${colors}
   //Typography

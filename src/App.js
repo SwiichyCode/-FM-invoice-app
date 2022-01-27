@@ -8,6 +8,8 @@ import Form from "./components/layout/Form/Form";
 import Layout from "./context/Layout";
 import { usersList } from "./data/data";
 import "./css/reset.css";
+import { faUnderline } from "@fortawesome/free-solid-svg-icons";
+import uuid from "./tools/randomId";
 
 export default function App() {
   const [users, setUsers] = useState([...usersList]);
@@ -20,6 +22,7 @@ export default function App() {
   };
 
   const addUser = (user) => {
+    user.id = uuid();
     setUsers([...users, user]);
   };
 
